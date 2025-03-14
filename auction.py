@@ -36,8 +36,6 @@ class Auction:
  
         if not bids:
             return
-        
-
         max_bid = max(bids.values())
         max_bidders = [b for b, amount in bids.items() if amount == max_bid]
 
@@ -66,15 +64,10 @@ class Auction:
         
 
         for bidder in self.bidders:
-            if bidder in active_bidders:
-                if bidder == winner:
-                    balance_change = reward - second_price
-                else:
-                    balance_change = 0
-            else:
-                balance_change = 0
+            self.history[bidder] += reward - second_price
             
-            self.history[bidder].append(self.balances[bidder])
+            for bidder in self.bidders:
+                self.history[bidder].append(self.balances[bidder])
     
     def plot_history(self):
 
