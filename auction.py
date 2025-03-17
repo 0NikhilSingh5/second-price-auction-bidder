@@ -108,9 +108,10 @@ class Auction:
         self.balances[winner] += reward - second_price
 
         for bidder in self.bidders:
-            self.history[bidder] += reward - second_price
+            self.history[winner].append(self.balances[winner])
             for bidder in self.bidders:
-                self.history[bidder].append(self.balances[bidder])
+                if bidder != winner:
+                    self.history[bidder].append(self.balances[bidder])
     def plot_history(self):
         """
         Plot the history of each bidder's balance over time.
