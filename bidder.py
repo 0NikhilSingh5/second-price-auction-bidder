@@ -1,7 +1,44 @@
+"""
+Second-Price Ad Auction Bidding Agent
+
+This module implements an bidding agent for second-price ad auctions.
+
+The bidding strategy combines Thompson sampling with Upper Confidence Bound
+techniques to effectively balance exploration and exploitation throughout the auction
+lifecycle. The agent adaptively learns user click probabilities and competitor bidding
+patterns to maximize ROI.
+
+Classes:
+    Bidder: Core bidding agent with methods for bid generation and processint the results.
+
+Dependencies:
+    - numpy (>=1.18.0): For numerical operations and statistical sampling
+"""
+
 import numpy as np
 
 class Bidder:
+    """
+    A bidding agent for a second-price ad auction.
+    
+    Attributes:
+        1. num_users (int)       : Total users in the auction.
+        2. num_rounds (int)      : Total auction rounds.
+        3. _user_data (dict)     : Dictionary containing user performance metrics.
+        4. _auction_config (dict): Dictionary containing auction parameters.
+        5. current_round (int)   : Current round number.
+        6. last_user_id (int)    : ID of the most recent user targeted.
+        7. last_bid (float)      : Most recent bid amount.
+    """
+
     def __init__(self, num_users, num_rounds):
+        """
+        Initialize the bidder with parameters for the auction.
+        
+        Args:
+            num_users (int) : Total number of users in the auction.
+            num_rounds (int): Total number of rounds in the auction.
+        """
         self.num_users = num_users
         self.num_rounds = num_rounds
         #consolidated user performance data
@@ -22,6 +59,17 @@ class Bidder:
         self.last_user_id = None
         self.last_bid = None
     def bid(self, user_id):
+        """
+        Generate a bid for the given user based on historic performance.
+        
+        Uses Thompson sampling with Beta distribution and UCB-inspired exploration
+        bonus to determine bid amount.
+        
+        Args:
+            user_id (int): The ID of the user to bid on.
+        Returns:
+            float: The bid amount, rounded to 3 decimal places.
+        """
         # Update tracking variables
         self.current_round += 1
         self.last_user_id = user_id
@@ -83,6 +131,17 @@ class Bidder:
         self.last_bid = round(bid_amount, 3)
         return self.last_bid
     def notify(self, auction_winner, winning_price, clicked):
+        """
+        Process notifications about auction results.
+        
+        Updates bidder's internal models based on auction outcomes to improve
+        future bidding decisions.
+        
+        Args:
+            auction_winner (bool) : True if this bidder won the auction.
+            winning_price (float) : The second-highest bid (price paid).
+            clicked (bool or None): Whether the user clicked (None if lost).
+        """
         # Update our records if we have data from the previous bid
         if self.last_user_id is None:
             return
