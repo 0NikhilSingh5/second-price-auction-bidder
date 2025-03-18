@@ -28,6 +28,6 @@ jobs:
       run: |
         git config --local user.email "singhnikhil2508@github.com"
         git config --local user.name "Nikhil Singh"
-        git add PYLINT_SCORE.md PYLINT_BADGE.md
+        git add PYLINT_SCORE.md PYLINT_BADGE.md README.md
         git commit -m "Update pylint score" || echo "No changes to commit"
         git push
