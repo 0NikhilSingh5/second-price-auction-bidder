@@ -1,9 +1,37 @@
+"""
+Unit Tests for Second-Price Sealed-Bid Auction System
+
+This module contains unit tests for the auction system components including 
+User, Bidder, and Auction classes. The tests verify that each component 
+functions correctly both independently and when integrated together.
+
+Test cases include:
+- User click behavior based on probability
+- Bidder bid generation functionality and constraints
+- Auction round execution mechanics
+- Bidder learning and adaptation based on auction outcomes
+
+Run these tests using Python's unittest framework:
+    python -m unittest test_auction.py
+
+Dependencies:
+    - unittest: Python's built-in testing framework
+    - unittest.mock: For creating mock objects and patching functions
+    - auction: Module containing User and Auction classes
+    - bidder: Module containing Bidder class
+"""
 import unittest
 from unittest.mock import patch, MagicMock
 from auction import User, Auction
 from bidder import Bidder
 
 class TestAuctionSystem(unittest.TestCase):
+    """
+    Test suite for the second-price sealed-bid auction system.
+    
+    This test suite verifies the functionality of User, Bidder, and Auction classes,
+    including user click behavior, bidder functionality, and auction execution mechanics
+    """
 
     def setUp(self):
         # Create a fixed set of users and bidders for testing
