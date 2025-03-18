@@ -9,23 +9,9 @@ if [[ -z "$score" ]]; then
     score="0.0"
 fi
 
-# Generate a simple markdown report
-echo "# Pylint Score" > PYLINT_SCORE.md
-echo "" >> PYLINT_SCORE.md
-echo "Current score: $score/10.0" >> PYLINT_SCORE.md
-echo "" >> PYLINT_SCORE.md
-echo "Last updated: $(date)" >> PYLINT_SCORE.md
-echo "" >> PYLINT_SCORE.md
-echo "## Details" >> PYLINT_SCORE.md
-echo '```' >> PYLINT_SCORE.md
-cat pylint_output.txt >> PYLINT_SCORE.md
-echo '```' >> PYLINT_SCORE.md
-
-# Generate badge markdown
-badge="[![Pylint Score](https://img.shields.io/badge/pylint-$score-yellow)](PYLINT_SCORE.md)"
-
-# Update README.md with the new badge
-sed -i "s|\\[\\!\\[Pylint Score\\].*\\]\\(PYLINT_SCORE.md\\)|$badge|" README.md
+# Update README.md with the new score text
+# Look for a line that contains "Code Quality score" and update the next line
+sed -i '/## Code Quality score/!b;n;c\\nPylint Score: '"$score"'/10.0\n' README.md
 
 # Clean up
 rm pylint_output.txt
