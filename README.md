@@ -4,7 +4,7 @@ This project implements a Second-Price Sealed-Bid Auction system for online adve
 
 The goal is to design a smart bidding agent that strategically balances exploration and exploitation to maximize profits while competing against other bidders
 
-## How the auction works:
+## ❓ How the auction works:
 * Each **User** has a **secret probability** of clicking an ad.
 
 * Each **Bidder** submits a bid to display an ad when a user visits a page.
@@ -15,12 +15,12 @@ The goal is to design a smart bidding agent that strategically balances explorat
 
 * The auction continues for a predefined number of rounds.
 
-## Project files
+## 📂Project files
 auction.py - Implements the User and Auction classes.
 
 bidder.py - Implements the Bidder class with an intelligent bidding strategy.
 
-## Installation & Setup
+## ⭐Installation & Setup
 ### Clone the Repository
 ```bash
 git clone https://github.com/0NikhilSingh5/second-price-auction-bidder.git
@@ -31,7 +31,7 @@ cd second-price-auction-bidder
 pip install numpy 
 ```
 
-## Code Breakdown
+## ⚒️Code Breakdown
 
 **1. User class**
 
@@ -112,7 +112,7 @@ class Auction:
         self.balances[winner] += (1 if clicked else 0) - second_price
 ```
 
-## How to run the auction:
+## ⚙️How to run the auction:
 ### Example Simulation
 ```python
     if __name__ == "__main__":
@@ -123,7 +123,7 @@ class Auction:
     for _ in range(100):
         auction.execute_round()
 ```
-## Results & Performance
+## 📈📊 Results & Performance 
 
 * The Bidder adapts over time, learning which users have higher click probabilities.
 
