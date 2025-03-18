@@ -1,0 +1,33 @@
+name: Pylint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pylint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pylint
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Generate Pylint Score
+      run: |
+        chmod +x generate_pylint_report.sh
+        ./generate_pylint_report.sh
+    - name: Commit Pylint results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add PYLINT_SCORE.md PYLINT_BADGE.md
+        git commit -m "Update pylint score" || echo "No changes to commit"
+        git push
