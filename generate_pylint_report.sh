@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run pylint and save the score
-pylint --output-format=text your_module_directory > pylint_output.txt
+pylint --output-format=text *.py > pylint_output.txt
 score=$(grep "Your code has been rated at" pylint_output.txt | grep -o '[0-9]\+\.[0-9]\+')
 
 # Generate a simple markdown report
