@@ -57,15 +57,11 @@ class Auction:
     """
     def __init__(self, users, bidders):
         self.users = users
-        
         self.bidders = bidders
-        
         # Dictionary to track each bidder's balance
         self.balances = {bidder: 0 for bidder in bidders}
-        
         # Track auction history for visualization
         self.history = {bidder: [] for bidder in bidders}
-        
         self.round_number = 0
     def execute_round(self):
         """
@@ -83,30 +79,25 @@ class Auction:
         """
         self.round_number += 1
         user_index = random.randrange(len(self.users))
-        
         selected_user = self.users[user_index]
         active_bidders = [b for b in self.bidders if self.balances[b] >= -1000]
-        
         bids = {}
         for bidder in active_bidders:
             bid_amount = bidder.bid(user_index)
             bid_amount = max(0, round(bid_amount, 3))
-            bids[bidder] = bid_amount
-            
+            bids[bidder] = bid_amount    
         if not bids:
             return
         max_bid = max(bids.values())
         max_bidders = [b for b, amount in bids.items() if amount == max_bid]
         winner = random.choice(max_bidders)
-        if len(max_bidders) > 1:
-            
+        if len(max_bidders) > 1:  
             second_price = max_bid
         else:
 
             second_bids = [amount for bidder, amount in bids.items()
                            if bidder != winner]
-            second_price = max(second_bids) if second_bids else 0
-            
+            second_price = max(second_bids) if second_bids else 0    
         clicked = selected_user.show_ad()
         for bidder in active_bidders:
             if bidder == winner:
