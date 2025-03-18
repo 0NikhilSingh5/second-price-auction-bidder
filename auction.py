@@ -85,7 +85,7 @@ class Auction:
         for bidder in active_bidders:
             bid_amount = bidder.bid(user_index)
             bid_amount = max(0, round(bid_amount, 3))
-            bids[bidder] = bid_amount 
+            bids[bidder] = bid_amount
         if not bids:
             return
         max_bid = max(bids.values())
@@ -97,7 +97,7 @@ class Auction:
 
             second_bids = [amount for bidder, amount in bids.items()
                            if bidder != winner]
-            second_price = max(second_bids) if second_bids else 0    
+            second_price = max(second_bids) if second_bids else 0
         clicked = selected_user.show_ad()
         for bidder in active_bidders:
             if bidder == winner:
