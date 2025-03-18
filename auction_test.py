@@ -105,7 +105,7 @@ class TestAuctionSystem(unittest.TestCase):
         # Check if the bidder updated its records
         self.assertEqual(bidder.user_data['impressions'][0], 1)
         self.assertEqual(bidder.user_data['clicks'][0], 1)
-        self.assertEqual(bidder.user_data['click_probs'][0], 1.0)gi
+        self.assertEqual(bidder.user_data['click_probs'][0], 1.0)
         self.assertEqual(bidder.user_data['winning_prices'][0], [0.4])
         # Simulate another won auction for user 0 without a click
         bidder.notify(True, 0.3, False)
