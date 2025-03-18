@@ -43,11 +43,11 @@ class TestAuctionSystem(unittest.TestCase):
 
     def test_user_click_behavior(self):
         """Test if User click behavior is consistent with its probability"""
-        user = User() 
+        user = User()
         # Control the random value to ensure consistent behavior
         with patch('random.random', side_effect=[0.3, 0.2, 0.8, 0.4]):
             # Set internal click probability to 0.5 for testing
-            user._User__click_probability = 0.5
+            user.click_probability = 0.5
             # User should click when random value (0.3) < click probability (0.5)
             self.assertTrue(user.show_ad())
             # User should click when random value (0.2) < click probability (0.5)
@@ -63,8 +63,8 @@ class TestAuctionSystem(unittest.TestCase):
         # Test bid for a user
         bid = bidder.bid(user_id=0)
         # Bid should be within the min and max bid range
-        self.assertGreaterEqual(bid, bidder._auction_config['min_bid'])
-        self.assertLessEqual(bid, bidder._auction_config['max_bid'])
+        self.assertGreaterEqual(bid, bidder.auction_config['min_bid'])
+        self.assertLessEqual(bid, bidder.auction_config['max_bid'])
         # Test bid precision (should be rounded to 3 decimal places)
         self.assertEqual(round(bid, 3), bid)
 
@@ -81,7 +81,7 @@ class TestAuctionSystem(unittest.TestCase):
         auction = Auction([mock_user], [mock_bidder1, mock_bidder2])
         # Control random selection to ensure consistent behavior
         with patch('random.randrange', return_value=0), \
-             patch('random.choice', return_value=mock_bidder1): 
+             patch('random.choice', return_value=mock_bidder1):
             # Execute a round
             auction.execute_round()
             # Check if the auction called the right methods
@@ -92,7 +92,7 @@ class TestAuctionSystem(unittest.TestCase):
             # Winner, second price, clicked
             mock_bidder1.notify.assert_called_once_with(True, 0.3, True)
             # Loser, second price, None
-            mock_bidder2.notify.assert_called_once_with(False, 0.3, None)  
+            mock_bidder2.notify.assert_called_once_with(False, 0.3, None)
             # Check if the balance was updated correctly (reward - second price)
             self.assertEqual(auction.balances[mock_bidder1], 1 - 0.3)
 
@@ -103,17 +103,17 @@ class TestAuctionSystem(unittest.TestCase):
         bidder.last_user_id = 0
         bidder.notify(True, 0.4, True)
         # Check if the bidder updated its records
-        self.assertEqual(bidder._user_data['impressions'][0], 1)
-        self.assertEqual(bidder._user_data['clicks'][0], 1)
-        self.assertEqual(bidder._user_data['click_probs'][0], 1.0)
-        self.assertEqual(bidder._user_data['winning_prices'][0], [0.4])
+        self.assertEqual(bidder.user_data['impressions'][0], 1)
+        self.assertEqual(bidder.user_data['clicks'][0], 1)
+        self.assertEqual(bidder.user_data['click_probs'][0], 1.0)gi
+        self.assertEqual(bidder.user_data['winning_prices'][0], [0.4])
         # Simulate another won auction for user 0 without a click
         bidder.notify(True, 0.3, False)
         # Check if the bidder updated its records correctly
-        self.assertEqual(bidder._user_data['impressions'][0], 2)
-        self.assertEqual(bidder._user_data['clicks'][0], 1)
-        self.assertEqual(bidder._user_data['click_probs'][0], 0.5)
-        self.assertEqual(bidder._user_data['winning_prices'][0], [0.4, 0.3])
+        self.assertEqual(bidder.user_data['impressions'][0], 2)
+        self.assertEqual(bidder.user_data['clicks'][0], 1)
+        self.assertEqual(bidder.user_data['click_probs'][0], 0.5)
+        self.assertEqual(bidder.user_data['winning_prices'][0], [0.4, 0.3])
 
 if __name__ == '__main__':
     unittest.main()

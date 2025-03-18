@@ -26,7 +26,7 @@ class User:
         __probability (float): Hidden probability of the user clicking on an ad.
     """
     def __init__(self):
-        self.__click_probability = random.random()
+        self.click_probability = random.random()
     def show_ad(self):
         """
         Simulate showing an ad to this user.
@@ -36,7 +36,7 @@ class User:
                   False otherwise
                   NOTE:Probabilit of Returning True = User's click probability
         """
-        return random.random() < self.__click_probability
+        return random.random() < self.click_probability
 
 
 class Auction:
