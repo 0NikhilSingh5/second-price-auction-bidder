@@ -4,6 +4,11 @@
 pylint --output-format=text *.py > pylint_output.txt
 score=$(grep "Your code has been rated at" pylint_output.txt | grep -o '[0-9]\+\.[0-9]\+')
 
+# Ensure score is not empty
+if [[ -z "$score" ]]; then
+    score="0.0"
+fi
+
 # Generate a simple markdown report
 echo "# Pylint Score" > PYLINT_SCORE.md
 echo "" >> PYLINT_SCORE.md
@@ -18,7 +23,6 @@ echo '```' >> PYLINT_SCORE.md
 
 # Generate badge markdown
 badge="[![Pylint Score](https://img.shields.io/badge/pylint-$score-yellow)](PYLINT_SCORE.md)"
-echo "$badge" > PYLINT_BADGE.md
 
 # Update README.md with the new badge
 sed -i "s|!\[Pylint Score\](https://img.shields.io/badge/pylint-[0-9\.]*-yellow)|$badge|" README.md
