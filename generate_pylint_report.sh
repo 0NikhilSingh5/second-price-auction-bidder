@@ -25,7 +25,7 @@ echo '```' >> PYLINT_SCORE.md
 badge="[![Pylint Score](https://img.shields.io/badge/pylint-$score-yellow)](PYLINT_SCORE.md)"
 
 # Update README.md with the new badge
-sed -i "s|!\[Pylint Score\](https://img.shields.io/badge/pylint-[0-9\.]*-yellow)|$badge|" README.md
+sed -i "s|\\[\\!\\[Pylint Score\\].*\\]\\(PYLINT_SCORE.md\\)|$badge|" README.md
 
 # Clean up
 rm pylint_output.txt
