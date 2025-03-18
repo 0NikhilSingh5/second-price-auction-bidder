@@ -63,7 +63,7 @@ class Bidder:
         """Initialize the bidder with auction parameters."""
         self.num_users = num_users
         self.num_rounds = num_rounds
-        self._user_data = {
+        self.user_data = {
             'clicks': np.zeros(num_users),
             'impressions': np.zeros(num_users),
             'click_probs': np.full(num_users, 0.45),
@@ -72,8 +72,8 @@ class Bidder:
 
     def bid(self, user_id):
         """Generate an optimal bid based on historical performance."""
-        clicks = self._user_data['clicks'][user_id]
-        impressions = self._user_data['impressions'][user_id]
+        clicks = self.user_data['clicks'][user_id]
+        impressions = self.user_data['impressions'][user_id]
         
         if impressions == 0:
             estimated_value = 0.5  # Default estimate for unseen users
@@ -86,9 +86,9 @@ class Bidder:
     def notify(self, auction_winner, winning_price, clicked):
         """Update internal models based on auction results."""
         if auction_winner:
-            self._user_data['impressions'][self.last_user_id] += 1
+            self.user_data['impressions'][self.last_user_id] += 1
             if clicked:
-                self._user_data['clicks'][self.last_user_id] += 1
+                self.user_data['clicks'][self.last_user_id] += 1
 ```
 
 **3. Auction Class** 
