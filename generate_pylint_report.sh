@@ -15,6 +15,8 @@ echo '```' >> PYLINT_SCORE.md
 cat pylint_output.txt >> PYLINT_SCORE.md
 echo '```' >> PYLINT_SCORE.md
 
+score=$(grep "Your code has been rated at" pylint_output.txt | grep -o '[0-9]\+\.[0-9]\+')
+
 # Optional: generate
 echo "[![Pylint Score](https://img.shields.io/badge/pylint-$score-yellow)](PYLINT_SCORE.md)" > PYLINT_BADGE.md
 
