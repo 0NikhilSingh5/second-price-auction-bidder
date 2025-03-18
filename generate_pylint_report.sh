@@ -9,9 +9,38 @@ if [[ -z "$score" ]]; then
     score="0.0"
 fi
 
-# Update README.md with the new score text
-# Look for a line that contains "Code Quality score" and update the next line
-sed -i '/## Code Quality score/!b;n;c\\nPylint Score: '"$score"'/10.0\n' README.md
+# Create temporary file
+temp_file=$(mktemp)
+
+# Read README.md line by line
+in_score_section=false
+while IFS= read -r line; do
+    # Check if we're at the score section header
+    if [[ "$line" == "## Code Quality score" ]]; then
+        echo "$line" >> "$temp_file"
+        echo "Pylint Score: $score/10.0" >> "$temp_file"
+        in_score_section=true
+        continue
+    fi
+    
+    # If we're in the score section and find the next section or empty line, exit the section
+    if $in_score_section && [[ "$line" =~ ^## || "$line" == "" ]]; then
+        in_score_section=false
+        echo "$line" >> "$temp_file"
+        continue
+    fi
+    
+    # Skip lines in the score section
+    if $in_score_section; then
+        continue
+    fi
+    
+    # Copy all other lines
+    echo "$line" >> "$temp_file"
+done < README.md
+
+# Replace the original README.md with our edited version
+mv "$temp_file" README.md
 
 # Clean up
 rm pylint_output.txt
