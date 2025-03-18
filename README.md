@@ -140,5 +140,5 @@ This project is open-source and licensed under the MIT License.
 
 ## Code Quality score
 
-[](PYLINT_BADGE.md)<br>
+[![Pylint Score](https://img.shields.io/badge/pylint-0.0-yellow)](PYLINT_SCORE.md)
 <sub>This score is given by pylint and it updates automatically when changes are pushed to this repository</sub>
