@@ -140,6 +140,8 @@ This project is open-source and licensed under the MIT License.
 
 ## Code Quality score
 
+Pylint Score: 9.41/10.0
+
 Pylint Score: 9.06/10.0
 
 <br>
